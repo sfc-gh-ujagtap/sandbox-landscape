@@ -6,11 +6,15 @@ See: https://www.daytona.io/docs/
 
 import os
 import time
+from pathlib import Path
 from dotenv import load_dotenv
 from daytona import Daytona, DaytonaConfig, CreateSandboxFromImageParams
 
 # Load environment variables from .env file
 load_dotenv()
+
+# Get the project root (parent of this file's directory)
+project_root = Path(__file__).parent.parent
 
 # Initialize Daytona client
 # Set DAYTONA_API_KEY in .env file or as environment variable
@@ -31,9 +35,9 @@ def deploy():
     
     print(f"✅ Sandbox created: {sandbox.id}")
     
-    # Upload the app files
-    sandbox.fs.upload_file("app.py", "app.py")
-    sandbox.fs.upload_file("requirements.txt", "requirements.txt")
+    # Upload the app files from project root
+    sandbox.fs.upload_file(str(project_root / "app.py"), "app.py")
+    sandbox.fs.upload_file(str(project_root / "requirements.txt"), "requirements.txt")
     
     print("📦 Installing dependencies...")
     

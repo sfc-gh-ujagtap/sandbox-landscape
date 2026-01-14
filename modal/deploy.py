@@ -1,6 +1,6 @@
 """
-Simple Modal deployment script for Streamlit app with mock data.
-This deploys a clean sales dashboard with generated mock data.
+Modal deployment script for Streamlit app.
+Deploys a sales dashboard with generated mock data.
 """
 
 import modal
@@ -9,14 +9,15 @@ from pathlib import Path
 # Create a Modal app
 app = modal.App("streamlit-sales-dashboard")
 
-# Get the local path to app.py
-local_path = Path(__file__).parent
+# Get the project root (parent of this file's directory)
+project_root = Path(__file__).parent.parent
 
 # Define the image with required dependencies and include app.py
 image = (
     modal.Image.debian_slim(python_version="3.11")
-    .pip_install_from_requirements(local_path / "requirements.txt")
-    .add_local_file(local_path / "app.py", "/root/app.py")
+    .pip_install_from_requirements(project_root / "requirements.txt")
+    .pip_install("modal==1.3.0")
+    .add_local_file(project_root / "app.py", "/root/app.py")
 )
 
 @app.function(

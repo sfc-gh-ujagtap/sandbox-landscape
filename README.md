@@ -1,20 +1,27 @@
 # 📊 Streamlit Deployments
 
-A collection of Streamlit dashboard deployments using different cloud platforms.
+A Streamlit sales dashboard with deployment options for Modal and Daytona.
 
 ## 📁 Project Structure
 
 ```
 streamlit-deployments/
+├── app.py                    # Shared Streamlit dashboard
+├── requirements.txt          # App dependencies
 ├── modal/                    # Modal.com deployment
-│   ├── app.py               # Streamlit sales dashboard
-│   ├── modal_deploy.py      # Modal deployment script
-│   └── requirements.txt     # Python dependencies
+│   ├── deploy.py            # Modal deployment script
+│   └── requirements.txt     # Modal-specific dependencies
 ├── daytona/                  # Daytona.io deployment
-│   ├── app.py               # Streamlit dashboard (Snowflake-ready)
-│   ├── daytona_deploy.py    # Daytona deployment script
-│   └── requirements.txt     # Python dependencies
-└── README.md                # This file
+│   ├── deploy.py            # Daytona deployment script
+│   └── requirements.txt     # Daytona-specific dependencies
+└── README.md
+```
+
+## 🚀 Local Development
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
 ```
 
 ## 🚀 Deployment Options
@@ -24,62 +31,25 @@ streamlit-deployments/
 [Modal](https://modal.com) provides serverless cloud functions with auto-scaling.
 
 ```bash
-cd modal
-pip install -r requirements.txt
+pip install -r modal/requirements.txt
 modal setup  # First time only
-modal deploy modal_deploy.py
+modal deploy modal/deploy.py
 ```
-
-**Features:**
-- Automatic scaling based on traffic
-- Built-in SSL and CDN
-- No server management required
 
 ### Daytona Deployment
 
 [Daytona](https://daytona.io) provides secure sandbox environments.
 
 ```bash
-cd daytona
-pip install -r requirements.txt
+pip install -r daytona/requirements.txt
 export DAYTONA_API_KEY="your-api-key"
-python daytona_deploy.py
+python daytona/deploy.py
 ```
-
-**Features:**
-- Secure sandbox execution
-- Snowflake integration ready
-- Preview URLs for sharing
 
 ## 📊 Dashboard Features
 
-Both dashboards include:
 - **Key Metrics**: Total sales, orders, customers, and average order value
 - **Sales Trend**: Line chart showing daily sales over time
 - **Product Revenue**: Bar chart of revenue by product
 - **Data Tables**: Recent sales data and product performance
 - **Interactive Filter**: Slider to analyze different time periods
-
-## 🛠️ Local Development
-
-Run either dashboard locally:
-
-```bash
-cd modal  # or cd daytona
-pip install -r requirements.txt
-streamlit run app.py
-```
-
-## 📈 Sample Data
-
-Both dashboards use generated mock data:
-- 30 days of sales, orders, and customer data
-- 5 products with revenue and units sold
-- Realistic business metrics
-
-## 🔧 Customization
-
-1. **Modify Data**: Edit the `generate_mock_data()` function
-2. **Add Charts**: Use Plotly Express for new visualizations
-3. **Change Layout**: Adjust `st.columns()` and component placement
-4. **Add Interactivity**: Include more Streamlit widgets
