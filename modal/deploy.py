@@ -1,13 +1,14 @@
 """
 Modal deployment script for Streamlit app.
-Deploys a sales dashboard with generated mock data.
+Deploys a TPC-H sales dashboard connected to Snowflake.
 """
 
+import os
 import modal
 from pathlib import Path
 
 # Create a Modal app
-app = modal.App("streamlit-sales-dashboard")
+app = modal.App("streamlit-tpch-dashboard")
 
 # Get the project root (parent of this file's directory)
 project_root = Path(__file__).parent.parent
@@ -22,7 +23,8 @@ image = (
 
 @app.function(
     image=image,
-    timeout=3600
+    timeout=3600,
+    secrets=[modal.Secret.from_name("snowflake-credentials")]
 )
 @modal.web_server(8501, startup_timeout=60)
 def run_streamlit():
@@ -38,6 +40,6 @@ def run_streamlit():
 
 @app.local_entrypoint()
 def main():
-    print("🚀 Deploying Sales Dashboard to Modal...")
+    print("🚀 Deploying TPC-H Dashboard to Modal...")
     print("📊 Your Streamlit app will be available at the provided URL")
     print("⚡ App is now running on Modal!")

@@ -25,10 +25,22 @@ def deploy():
     """Deploy Streamlit app to Daytona sandbox."""
     print("🏎️ Creating Daytona Sandbox...")
     
-    # Create a public sandbox so the preview URL is accessible
+    # Get Snowflake credentials from environment
+    sf_account = os.environ.get("SNOWFLAKE_ACCOUNT", "")
+    sf_user = os.environ.get("SNOWFLAKE_USER", "")
+    sf_password = os.environ.get("SNOWFLAKE_PASSWORD", "")
+    sf_warehouse = os.environ.get("SNOWFLAKE_WAREHOUSE", "COMPUTE_WH")
+    
+    # Create a public sandbox with environment variables
     params = CreateSandboxFromImageParams(
         image="daytonaio/sandbox:latest",
-        public=True
+        public=True,
+        env_vars={
+            "SNOWFLAKE_ACCOUNT": sf_account,
+            "SNOWFLAKE_USER": sf_user,
+            "SNOWFLAKE_PASSWORD": sf_password,
+            "SNOWFLAKE_WAREHOUSE": sf_warehouse
+        }
     )
     
     sandbox = daytona.create(params)
