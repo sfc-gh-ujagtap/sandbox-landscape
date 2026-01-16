@@ -76,41 +76,6 @@ export SNOWFLAKE_PASSWORD="your-password"
 python e2b/deploy.py
 ```
 
-### Northflank Deployment
-
-[Northflank](https://northflank.com) provides container deployment on managed or your own cloud.
-
-```bash
-# Install Northflank CLI
-npm install -g @northflank/cli
-
-# Login to Northflank
-northflank login
-
-# Deploy
-cd northflank
-python deploy.py
-```
-
-Or deploy manually via CLI:
-
-```bash
-cd northflank
-northflank create project --name streamlit-tpch
-northflank create service \
-  --project streamlit-tpch \
-  --name tpch-dashboard \
-  --type deployment \
-  --dockerfile ./Dockerfile \
-  --port 8501
-```
-
-Then set environment variables in the Northflank dashboard:
-- `SNOWFLAKE_ACCOUNT`
-- `SNOWFLAKE_USER`
-- `SNOWFLAKE_PASSWORD`
-- `SNOWFLAKE_WAREHOUSE`
-
 ## 📊 Dashboard Features
 
 - **Key Metrics**: Total revenue, orders, customers, and average order value
